@@ -30,6 +30,6 @@ service mysql stop
 service mysql start
 # 修改数据库IP和端口 & 刷新game账户权限只允许本地登录
 mysql -u root -p$DNF_DB_ROOT_PASSWORD -P 3306 -h 127.0.0.1 <<EOF
-update d_taiwan.db_connect set db_ip="$MYSQL_IP", db_port="3306";
+update d_taiwan.db_connect set db_ip="$MYSQL_IP", db_port="$MYSQL_PORT";
 select * from d_taiwan.db_connect;
 EOF

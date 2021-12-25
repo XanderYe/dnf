@@ -7,6 +7,8 @@ MAINTAINER XanderYe
 ENV AUTO_MYSQL_IP=false
 # 指定mysql的IP
 ENV MYSQL_IP=127.0.0.1
+# dnf服务器连接的的外网端口
+ENV MYSQL_PORT=3306
 # dnf服务端game用户连接mysql的ip白名单
 ENV ALLOW_IP=127.0.0.1
 
