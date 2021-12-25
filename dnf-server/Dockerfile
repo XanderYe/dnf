@@ -4,7 +4,10 @@ FROM xanderye/centos7-geoip
 MAINTAINER XanderYe
 
 # 定义默认环境变量
+ENV AUTO_MYSQL_IP=true
+ENV MYSQL_NAME=dnfmysql
 ENV MYSQL_IP=192.168.1.2
+ENV AUTO_PUBLIC_IP=false
 ENV PUBLIC_IP=127.0.0.1
 ENV AUTO_PUBLIC_IP=false
 ENV GM_ACCOUNT=gm_user

@@ -18,6 +18,22 @@ cp -r /home/template/root /home/template/root-tmp
 # 检查/data
 /home/template/init/init.sh
 
+# 获取mysql容器的ip
+if $AUTO_MYSQL_IP;
+then
+  MYSQL_IP=`ping -i 0.1 -c 1 $MYSQL_NAME|sed '1{s/[^(]*(//;s/).*//;q}'`
+  echo mysql ip: $MYSQL_IP
+fi
+
+# 获取公网ip
+if $AUTO_PUBLIC_IP;
+then
+  PUBLIC_IP=`curl -s http://pv.sohu.com/cityjson?ie=utf-8|awk -F\" '{print $4}'`
+  echo public ip: $PUBLIC_IP
+fi
+
+sleep 1
+
 # 替换环境变量
 sed -i "s/MYSQL_IP/$MYSQL_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
@@ -39,6 +55,7 @@ cp /data/privatekey.pem /root/
 # 构建配置文件软链[不能使用硬链接, 硬链接不可跨设备]
 ln -s /data/Config.ini /root/Config.ini
 # 替换Config.ini中的GM用户名、密码、连接KEY、登录器版本[这里操作的对象是一个软链接不需要指定-type]
+sed -i --follow-symlinks "6c IP=$MYSQL_IP" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/MYSQL_IP/$MYSQL_IP/g" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/GM_ACCOUNT/$GM_ACCOUNT/g" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/GM_PASSWORD/$GM_PASSWORD/g" `find /root -name "*.ini"`

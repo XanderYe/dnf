@@ -75,8 +75,9 @@ docker pull xanderye/dnf-server:centos7
 ## 简单启动
 
 ```shell
-# 创建一个目录,这里以/data为例,后续会将该目录下的mysql以及data目录挂载到容器内部
-mkdir -p /data
+# 创建一个dnf独立网桥，连通mysql和server两个容器
+docker network create dnf
+
 # 启动数据库以(首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待)
 # AUTO_MYSQL_IP为自动获取内网IP(ALLOW_IP会使用内网IP网段)
 # MYSQL_IP为dnf服务连接的mysql的ip
@@ -91,18 +92,25 @@ docker run -itd \
 # root账户密码
 -e DNF_DB_ROOT_PASSWORD=88888888 \
 --name dnf-mysql \
+--network=dnf \
 xanderye/dnf-mysql:5.0
 
 #查看日志 (首次启动会卡在Starting MySQL. SUCCESS! 需要等待，出现一大堆数据库配置列表才是启动完成)
 docker logs dnf-mysql
 
 # 启动dnf服务
-# MYSQL_IP为mysql的IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
+# AUTO_MYSQL_IP为自动获取mysql容器的ip
+# MYSQL_NAME为mysql容器名称（主机名）
+# MYSQL_IP为mysql的IP地址（使用时需要关闭AUTO_MYSQL_IP）
+# AUTO_PUBLIC_IP为自动获取公网ip（不稳定 需观察日志输出）
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
 # GM_ACCOUNT为登录器用户名，建议替换
 # GM_PASSWORD为登录器密码，建议替换
 docker run -d \
+-e AUTO_MYSQL_IP=true \
+-e MYSQL_NAME=dnfmysql \
 -e MYSQL_IP=192.168.1.2 \
+-e AUTO_PUBLIC_IP=false \
 -e PUBLIC_IP=192.168.1.2 \
 -e GM_ACCOUNT=gm_user \
 -e GM_PASSWORD=123456 \
@@ -130,6 +138,7 @@ docker run -d \
 -p 11052:11052/udp \
 --cpus=1 --memory=1g --memory-swap=-1 --shm-size=8g \
 --name dnf-server \
+--network=dnf \
 xanderye/dnf-server:centos7
 ```
 
