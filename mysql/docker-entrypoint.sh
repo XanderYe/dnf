@@ -16,6 +16,7 @@ echo mysql ip: $MYSQL_IP
 ALLOW_IP=${MYSQL_IP%.*}.%
 fi
 
+sleep 1s
 
 mysql -u root <<EOF
 delete from mysql.user;
