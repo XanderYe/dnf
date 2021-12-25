@@ -108,6 +108,7 @@ docker logs dnf-mysql
 # GM_ACCOUNT为登录器用户名，建议替换
 # GM_PASSWORD为登录器密码，建议替换
 docker run -d \
+-e TZ=Asia/Shanghai \
 -e AUTO_MYSQL_IP=true \
 -e MYSQL_NAME=dnfmysql \
 -e MYSQL_IP=192.168.1.2 \
