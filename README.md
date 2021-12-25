@@ -82,6 +82,7 @@ docker network create dnf
 # AUTO_MYSQL_IP为自动获取内网IP(ALLOW_IP会使用内网IP网段)
 # MYSQL_IP为dnf服务连接的mysql的ip
 # MYSQL_PORT为dnf服务连接的的端口
+# ALLOW_IP为game账户ip白名单（dnf服务的ip）
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
 docker run -itd \
 -p 3306:3306 \
@@ -90,6 +91,7 @@ docker run -itd \
 -e AUTO_MYSQL_IP=false \
 -e MYSQL_IP=192.168.1.2 \
 -e MYSQL_PORT=3306 \
+-e ALLOW_IP=192.168.1.2 \
 # root账户密码
 -e DNF_DB_ROOT_PASSWORD=88888888 \
 --name dnf-mysql \
@@ -143,6 +145,11 @@ docker run -d \
 --network=dnf \
 xanderye/dnf-server:centos7
 ```
+
+## docker-compose启动
+
+yml文件参考：[docker-compose.yml](docker-compose.yml)
+说明：支持一键部署，首次启动初始化数据需要一点时间，注意查看dnfmysql日志，初始化完成后重启dnfserver即可。
 
 ## 如何确认已经成功启动
 
@@ -215,6 +222,8 @@ docker rm dnf-server
 ```shell
 # 数据库IP地址
 MYSQL_IP
+# 自动获取公网IP地址
+AUTO_PUBLIC_IP
 # 公网或局域网IP地址
 PUBLIC_IP
 # GM管理员账号
