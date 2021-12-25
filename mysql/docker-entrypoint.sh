@@ -9,16 +9,19 @@ fi
 # 重建root, game用户,并限制game只能容器内服务访问
 service mysql start --skip-grant-tables
 
+if $AUTO_MYSQL_IP;
+then
 MYSQL_IP=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')
 echo mysql ip: $MYSQL_IP
-NET=${MYSQL_IP%.*}
+ALLOW_IP=${MYSQL_IP%.*}.%
+fi
 
 
 mysql -u root <<EOF
 delete from mysql.user;
 flush privileges;
 grant all privileges on *.* to 'root'@'%' identified by '$DNF_DB_ROOT_PASSWORD';
-grant all privileges on *.* to 'game'@'$NET.%' identified by 'uu5!^%jg';
+grant all privileges on *.* to 'game'@'$ALLOW_IP' identified by 'uu5!^%jg';
 flush privileges;
 select user,host,password from mysql.user;
 EOF
