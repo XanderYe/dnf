@@ -5,9 +5,9 @@ MAINTAINER XanderYe
 
 # 自动获取内网IP(ALLOW_IP会使用内网IP网段)
 ENV AUTO_MYSQL_IP=false
-# 指定mysql的IP
+# dnf服务连接的mysql的ip
 ENV MYSQL_IP=127.0.0.1
-# dnf服务器连接的的外网端口
+# dnf服务器连接的的端口
 ENV MYSQL_PORT=3306
 # dnf服务端game用户连接mysql的ip白名单
 ENV ALLOW_IP=127.0.0.1
