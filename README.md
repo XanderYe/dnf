@@ -86,6 +86,7 @@ docker network create dnf
 docker run -itd \
 -p 3306:3306 \
 -v /dnf/dnf-mysql/mysql:/var/lib/mysql \
+-e TZ=Asia/Shanghai \
 -e AUTO_MYSQL_IP=false \
 -e MYSQL_IP=192.168.1.2 \
 -e MYSQL_PORT=3306 \
