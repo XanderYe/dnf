@@ -90,12 +90,12 @@ docker run -itd \
 -e ALLOW_IP=192.168.1.2 \
 # root账户密码
 -e DNF_DB_ROOT_PASSWORD=88888888 \
---name dnf-mysql \
+--name dnfmysql \
 --network=dnf \
 xanderye/dnf-mysql:5.0
 
 #查看日志 (首次启动会卡在Starting MySQL. SUCCESS! 需要等待，出现一大堆数据库配置列表才是启动完成)
-docker logs dnf-mysql
+docker logs dnfmysql
 
 # 启动dnf服务
 # AUTO_MYSQL_IP为自动获取内网下mysql容器的ip
@@ -139,7 +139,7 @@ docker run -d \
 -p 30503:30503/udp \
 -p 11052:11052/udp \
 --cpus=1 --memory=1g --memory-swap=-1 --shm-size=8g \
---name dnf-server \
+--name dnfserver \
 --network=dnf \
 xanderye/dnf-server:centos7
 ```
