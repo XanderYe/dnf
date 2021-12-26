@@ -67,7 +67,7 @@ https://www.cnblogs.com/EasonJim/p/7777904.html
 
 ```shell
 dnf数据库mysql镜像
-docker pull xanderye/dnf-mysql:5.0  
+docker pull xanderye/dnf-mysql:centos7 
 dnf服务server镜像
 docker pull xanderye/dnf-server:centos7
 ```
@@ -92,7 +92,7 @@ docker run -itd \
 -e DNF_DB_ROOT_PASSWORD=88888888 \
 --name dnfmysql \
 --network=dnf \
-xanderye/dnf-mysql:5.0
+xanderye/dnf-mysql:centos7
 
 #查看日志 (首次启动会卡在Starting MySQL. SUCCESS! 需要等待，出现一大堆数据库配置列表才是启动完成)
 docker logs dnfmysql

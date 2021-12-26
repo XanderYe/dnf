@@ -8,7 +8,7 @@ networks:
 
 services:
   dnf-mysql:
-    image: xanderye/dnf-mysql:5.0
+    image: xanderye/dnf-mysql:centos7
     ports:
       - 3000:3306
     environment:
