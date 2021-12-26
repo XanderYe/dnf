@@ -79,18 +79,14 @@ docker pull xanderye/dnf-server:centos7
 docker network create dnf
 
 # 启动数据库以(首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待)
-# AUTO_MYSQL_IP为自动获取内网IP(ALLOW_IP会使用内网IP网段)
-# MYSQL_IP为dnf服务连接的mysql的ip
-# MYSQL_PORT为dnf服务连接的的端口
+# AUTO_ALLOW_IP为自动获取内网IP网段（ALLOW_IP会失效）
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
 docker run -itd \
 -p 3306:3306 \
 -v /dnf/dnf-mysql/mysql:/var/lib/mysql \
 -e TZ=Asia/Shanghai \
--e AUTO_MYSQL_IP=false \
--e MYSQL_IP=192.168.1.2 \
--e MYSQL_PORT=3306 \
+-e AUTO_ALLOW_IP=true \
 -e ALLOW_IP=192.168.1.2 \
 # root账户密码
 -e DNF_DB_ROOT_PASSWORD=88888888 \
@@ -102,10 +98,11 @@ xanderye/dnf-mysql:5.0
 docker logs dnf-mysql
 
 # 启动dnf服务
-# AUTO_MYSQL_IP为自动获取mysql容器的ip
-# MYSQL_NAME为mysql容器名称（主机名）
-# MYSQL_IP为mysql的IP地址（使用时需要关闭AUTO_MYSQL_IP）
-# AUTO_PUBLIC_IP为自动获取公网ip（不稳定 需观察日志输出）
+# AUTO_MYSQL_IP为自动获取内网下mysql容器的ip
+# MYSQL_NAME为内网下mysql容器名称（主机名）
+# MYSQL_IP为mysql的IP地址（公网使用，使用时需要关闭AUTO_MYSQL_IP）
+# MYSQL_PORT为mysql的端口（公网使用，使用时需要关闭AUTO_MYSQL_IP）
+# AUTO_PUBLIC_IP为自动获取公网ip（小概率会失败，观察日志 get public ip 输出）
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
 # GM_ACCOUNT为登录器用户名，建议替换
 # GM_PASSWORD为登录器密码，建议替换
@@ -114,6 +111,7 @@ docker run -d \
 -e AUTO_MYSQL_IP=true \
 -e MYSQL_NAME=dnfmysql \
 -e MYSQL_IP=192.168.1.2 \
+-e MYSQL_PORT=3306 \
 -e AUTO_PUBLIC_IP=false \
 -e PUBLIC_IP=192.168.1.2 \
 -e GM_ACCOUNT=gm_user \

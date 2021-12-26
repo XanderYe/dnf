@@ -13,9 +13,8 @@ services:
       - 3000:3306
     environment:
       - TZ=Asia/Shanghai
-      # 自动获取mysql内网ip
-      - AUTO_MYSQL_IP=true
-      #- MYSQL_IP=192.168.1.2
+      # 自动获取内网IP网段
+      - AUTO_ALLOW_IP=true
       #- ALLOW_IP=127.0.0.1
       - DNF_DB_ROOT_PASSWORD=88888888
     networks:
@@ -37,6 +36,8 @@ services:
       - MYSQL_NAME=dnfmysql
       # mysql的IP地址（使用时需要关闭AUTO_MYSQL_IP）
       - MYSQL_IP=192.168.1.2
+      # mysql的IP端口（使用时需要关闭AUTO_MYSQL_IP）
+      - MYSQL_PORT=3306
       # 自动获取公网ip
       - AUTO_PUBLIC_IP=false
       # 这里填写你的IP地址
