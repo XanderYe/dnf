@@ -93,7 +93,8 @@ docker run -itd \
 --name dnfmysql \
 --network=dnf \
 xanderye/dnf-mysql:centos7
-#或使用mysql5.6(数据不通用)
+
+# 或使用mysql5.6(数据不通用)
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
 docker run -itd \
