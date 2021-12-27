@@ -76,10 +76,10 @@ docker pull xanderye/dnf-server:centos7
 
 ```shell
 # 创建一个dnf独立网桥，连通mysql和server两个容器
-docker network create dnf
+docker network create dnf --subnet 172.20.0.0/16
 
 # 启动数据库以(首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待)
-# AUTO_ALLOW_IP为自动获取内网IP网段（ALLOW_IP会失效）
+# AUTO_ALLOW_IP为自动获取内网IP网段（ALLOW_IP会失效）（xanderye/dnf-mysql:5.6镜像不支持）
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
 docker run -itd \
@@ -87,7 +87,7 @@ docker run -itd \
 -v /dnf/dnf-mysql/mysql:/var/lib/mysql \
 -e TZ=Asia/Shanghai \
 -e AUTO_ALLOW_IP=true \
--e ALLOW_IP=192.168.1.2 \
+-e ALLOW_IP=172.20.0.% \
 # root账户密码
 -e DNF_DB_ROOT_PASSWORD=88888888 \
 --name dnfmysql \

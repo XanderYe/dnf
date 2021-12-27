@@ -15,7 +15,8 @@ services:
       - TZ=Asia/Shanghai
       # 自动获取内网IP网段
       - AUTO_ALLOW_IP=true
-      #- ALLOW_IP=127.0.0.1
+      # game账户ip白名单
+      - ALLOW_IP=172.20.0.%
       - DNF_DB_ROOT_PASSWORD=88888888
     networks:
       - dnf
