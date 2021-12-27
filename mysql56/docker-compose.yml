@@ -1,0 +1,18 @@
+version: "2.3"
+
+services:
+  dnf-mysql:
+    image: xanderye/dnf-mysql:5.6
+    ports:
+      - 3306:3306
+    environment:
+      - TZ=Asia/Shanghai
+      # game账户ip白名单
+      - ALLOW_IP=172.17.0.%
+      # mysql root密码
+      - MYSQL_ROOT_PASSWORD=88888888
+    network_mode: bridge
+    restart: unless-stopped
+    container_name: dnfmysql
+    volumes:
+      - ./mysql:/var/lib/mysql

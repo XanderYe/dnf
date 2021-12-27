@@ -2,7 +2,6 @@
 
 # 定义方法
 initMysql(){
-  service mysql start
 
   # 导入数据
   mysql -u root -p$MYSQL_ROOT_PASSWORD <<EOF
@@ -74,14 +73,19 @@ use tw;
 source /init/tw.sql;
 flush PRIVILEGES;
 EOF
-  service mysql stop
-  echo "init mysql success"
+  echo "mysql initialized successfully"
 }
 
-# 判断数据库是否初始化过
-if [ ! -d "/var/lib/mysql/d_taiwan" ];then
-  tar -zxvf /init/init_sql.tgz
-  initMysql
-else
-  echo "mysql have already inited, do nothing!"
-fi
+cd /init
+tar -zxvf /init/init_sql.tgz
+initMysql
+cd / && rm -rf /init
+
+mysql -u root -p$MYSQL_ROOT_PASSWORD <<EOF
+grant all privileges on *.* to 'root'@'%' identified by '$MYSQL_ROOT_PASSWORD';
+grant all privileges on *.* to 'game'@'$ALLOW_IP' identified by 'uu5!^%jg';
+flush privileges;
+select user,host,password from mysql.user;
+update d_taiwan.db_connect set db_ip="127.0.0.1", db_port="3306";
+select * from d_taiwan.db_connect;
+EOF

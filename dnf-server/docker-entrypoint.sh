@@ -25,8 +25,15 @@ then
   echo mysql ip: $MYSQL_IP
 fi
 
-echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
-rinetd -c /etc/rinetd.conf
+if [ $MYSQL_PORT != "3306" ];
+then
+  echo "mysql port is a not standard port(3306), starting rinetd to port forwarding"
+  echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
+  rinetd -c /etc/rinetd.conf
+  REP_MYSQL_IP=127.0.0.1
+else
+  REP_MYSQL_IP=$MYSQL_IP
+fi
 
 # 获取公网ip
 if $AUTO_PUBLIC_IP;
@@ -38,6 +45,7 @@ fi
 sleep 2
 
 # 替换环境变量
+sed -i "s/MYSQL_IP/$REP_MYSQL_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.tbl"`
 # 将结果文件拷贝到对应目录[这里是为了保住日志文件目录,将日志文件挂载到宿主机外,因此采用覆盖而不是mv]
