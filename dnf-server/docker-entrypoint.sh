@@ -25,15 +25,9 @@ then
   echo mysql ip: $MYSQL_IP
 fi
 
-if [ $MYSQL_PORT != "3306" ];
-then
-  echo "mysql port is a not standard port(3306), starting rinetd to port forwarding"
-  echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
-  rinetd -c /etc/rinetd.conf
-  REP_MYSQL_IP=127.0.0.1
-else
-  REP_MYSQL_IP=$MYSQL_IP
-fi
+echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
+rinetd -c /etc/rinetd.conf
+REP_MYSQL_IP=127.0.0.1
 
 # 获取公网ip
 if $AUTO_PUBLIC_IP;
