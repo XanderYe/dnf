@@ -8,6 +8,7 @@ rm -rf /root/GateRestart
 rm -rf /root/GateStop
 rm -rf /root/run
 rm -rf /root/stop
+rm -rf /root/libhook.so
 rm -rf /root/Config.ini
 rm -rf /root/privatekey.pem
 
@@ -75,5 +76,6 @@ sed -i --follow-symlinks "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /root -name 
 sed -i --follow-symlinks "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /root -name "*.ini"`
 
 cd /root
+chmod 777 libhook.so
 # 启动服务
 ./run

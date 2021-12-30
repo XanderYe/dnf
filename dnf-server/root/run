@@ -1,3 +1,5 @@
+export LD_PRELOAD=/root/libhook.so
+
 find /home/neople/ -name '*.log' -type f -print -exec rm -f {} \;
 find /home/neople/ -name '*.pid' -type f -print -exec rm -f {} \;
 find /home/neople/ -name 'core.*' -type f -print -exec rm -f {} \;

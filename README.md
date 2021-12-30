@@ -4,6 +4,8 @@
 
 基于[1995chen/dnf](https://github.com/1995chen/dnf)
 
+感谢 xyz1001大佬提供`libhook.so`优化CPU占用 [源码](https://godbolt.org/z/EKsYGh5dv)
+
 ## 部署流程
 
 ### Centos6/7安装Docker
@@ -67,7 +69,7 @@ https://www.cnblogs.com/EasonJim/p/7777904.html
 
 ```shell
 dnf数据库mysql镜像
-docker pull xanderye/dnf-mysql:centos7 
+docker pull xanderye/dnf-mysql:5.6 
 dnf服务server镜像
 docker pull xanderye/dnf-server:centos7
 ```
