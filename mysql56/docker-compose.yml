@@ -9,6 +9,8 @@ services:
       - TZ=Asia/Shanghai
       # game账户ip白名单 (ip addr 查看docker0的ip和网段)
       - ALLOW_IP=172.17.0.%
+      # game账户密码
+      - GAME_PASSWORD=uu5!^%jg
       # mysql root密码
       - MYSQL_ROOT_PASSWORD=88888888
     network_mode: bridge

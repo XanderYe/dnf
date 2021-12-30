@@ -22,7 +22,7 @@ cp -r /home/template/root /home/template/root-tmp
 if $AUTO_MYSQL_IP;
 then
   MYSQL_IP=`ping -i 0.1 -c 1 $MYSQL_NAME|sed '1{s/[^(]*(//;s/).*//;q}'`
-  echo mysql ip: $MYSQL_IP
+  echo "mysql ip: $MYSQL_IP"
 fi
 
 echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
@@ -33,13 +33,20 @@ REP_MYSQL_IP=127.0.0.1
 if $AUTO_PUBLIC_IP;
 then
   PUBLIC_IP=`curl -s http://pv.sohu.com/cityjson?ie=utf-8|awk -F\" '{print $4}'`
-  echo public ip: $PUBLIC_IP
+  echo "public ip: $PUBLIC_IP"
 fi
 
 sleep 2
 
+GAME_PASSWORD=${GAME_PASSWORD:0:8}
+DEC_GAME_PWD=`/TeaEncrypt $GAME_PASSWORD`
+echo "game password: $GAME_PASSWORD"
+echo "game dec key: $DEC_GAME_PWD"
+
 # 替换环境变量
 sed -i "s/MYSQL_IP/$REP_MYSQL_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
+sed -i "s/GAME_PASSWORD/$GAME_PASSWORD/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
+sed -i "s/DEC_GAME_PWD/$DEC_GAME_PWD/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.tbl"`
 # 将结果文件拷贝到对应目录[这里是为了保住日志文件目录,将日志文件挂载到宿主机外,因此采用覆盖而不是mv]
@@ -60,6 +67,7 @@ cp /data/privatekey.pem /root/
 ln -s /data/Config.ini /root/Config.ini
 # 替换Config.ini中的GM用户名、密码、连接KEY、登录器版本[这里操作的对象是一个软链接不需要指定-type]
 sed -i --follow-symlinks "6c IP=$MYSQL_IP" `find /root -name "*.ini"`
+sed -i --follow-symlinks "7c Password=$GAME_PASSWORD" `find /root -name "*.ini"`
 sed -i --follow-symlinks "8c Port=$MYSQL_PORT" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/GM_ACCOUNT/$GM_ACCOUNT/g" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/GM_PASSWORD/$GM_PASSWORD/g" `find /root -name "*.ini"`

@@ -78,37 +78,25 @@ docker pull xanderye/dnf-server:centos7
 # 创建一个dnf独立网桥，连通mysql和server两个容器
 docker network create dnf --subnet 172.20.0.0/16
 
-# 启动数据库以(首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待)
-# AUTO_ALLOW_IP为自动获取内网IP网段（ALLOW_IP会失效）
+# 使用mysql5.6(数据不通用)
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
-# DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
-docker run -itd \
--p 3306:3306 \
--v /dnf/dnf-mysql/mysql:/var/lib/mysql \
--e TZ=Asia/Shanghai \
--e AUTO_ALLOW_IP=true \
--e ALLOW_IP=172.20.0.% \
-# root账户密码
--e DNF_DB_ROOT_PASSWORD=88888888 \
---name dnfmysql \
---network=dnf \
-xanderye/dnf-mysql:centos7
-
-# 或使用mysql5.6(数据不通用)
-# ALLOW_IP为game账户ip白名单（dnf服务的ip）
+# GAME_PASSWORD为game账户密码（密码<=8位 否则无法连接）
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
 docker run -itd \
 -p 3306:3306 \
 -v /dnf/dnf-mysql/mysql:/var/lib/mysql \
 -e TZ=Asia/Shanghai \
 -e ALLOW_IP=172.20.0.% \
+-e GAME_PASSWORD=uu5!^%jg \
 # root账户密码
 -e MYSQL_ROOT_PASSWORD=88888888 \
 --name dnfmysql \
 --network=dnf \
 xanderye/dnf-mysql:5.6
 
-#查看日志 (首次启动会卡在Starting MySQL. SUCCESS! 需要等待，出现一大堆数据库配置列表才是启动完成)
+# 查看日志 (首次启动会卡在
+# Using a password on the command line interface can be insecure. 
+# 需要等待，出现一大堆数据库配置列表才是启动完成)
 docker logs dnfmysql
 
 
@@ -117,6 +105,7 @@ docker logs dnfmysql
 # MYSQL_NAME为内网下mysql容器名称（主机名）
 # MYSQL_IP为mysql的IP地址（公网使用，使用时需要关闭AUTO_MYSQL_IP）
 # MYSQL_PORT为mysql的端口（公网使用，使用时需要关闭AUTO_MYSQL_IP）
+# GAME_PASSWORD为game账户密码（密码<=8位 否则无法连接）
 # AUTO_PUBLIC_IP为自动获取公网ip（小概率会失败，观察日志 get public ip 输出）
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
 # GM_ACCOUNT为登录器用户名，建议替换
@@ -127,6 +116,7 @@ docker run -d \
 -e MYSQL_NAME=dnfmysql \
 -e MYSQL_IP=192.168.1.2 \
 -e MYSQL_PORT=3306 \
+-e GAME_PASSWORD=uu5!^%jg \
 -e AUTO_PUBLIC_IP=false \
 -e PUBLIC_IP=192.168.1.2 \
 -e GM_ACCOUNT=gm_user \

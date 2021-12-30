@@ -3,8 +3,9 @@
 ## 说明
 
 1. 与5.0互不兼容
-2. 首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待，使用`docker logs 容器名`查看日志出现很多行 表名ip端口密文 即完成
-3. 只在首次启动执行初始化脚本，后续修改密码需要手动执行sql
+2. 密码限制小于等于8位，否则无法连接
+3. 首次运行会导入数据，该过程耗时较长，可能会超过10分钟请耐心等待，使用`docker logs dnfmysql`查看日志出现出现一大堆数据库配置列表才是启动完成
+4. 只在首次启动执行初始化脚本，后续修改密码需要手动执行sql
 
 ## 启动
 
@@ -25,11 +26,12 @@ flush privileges;
 ```
 
 ## 修改game密码
-
-连接数据库，执行sql
+1. 计算TEA密文
+`docker exec -it dnfmysql /TeaEncrypt 新密码`
+2. 连接数据库，执行sql
 ```sql
 grant all privileges on *.* to 'game'@'%' identified by '新密码';
 flush privileges;
-# 使用TEA算法计算48位密文
-update d_taiwan.db_connect set db_passwd="密文";
+# 更新48位密文
+update d_taiwan.db_connect set db_passwd='密文';
 ```

@@ -11,12 +11,14 @@ services:
       - MYSQL_IP=192.168.1.2
       # mysql的IP端口
       - MYSQL_PORT=3306
+      # game账户密码
+      - GAME_PASSWORD=uu5!^%jg
       # 自动获取公网ip
       - AUTO_PUBLIC_IP=false
       # 这里填写你的IP地址
       - PUBLIC_IP=127.0.0.1
       - GM_ACCOUNT=gm_user
-      - GM_PASSWORD=gm_pass
+      - GM_PASSWORD=123456
       - GM_CONNECT_KEY=763WXRBW3PFTC3IXPFWH
       - GM_LANDER_VERSION=20180307
     shm_size: 8g

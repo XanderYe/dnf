@@ -8,10 +8,11 @@ ENV AUTO_MYSQL_IP=true
 ENV MYSQL_NAME=dnfmysql
 ENV MYSQL_IP=192.168.1.2
 ENV MYSQL_PORT=3306
+ENV GAME_PASSWORD=uu5!^%jg
 ENV AUTO_PUBLIC_IP=false
 ENV PUBLIC_IP=127.0.0.1
 ENV GM_ACCOUNT=gm_user
-ENV GM_PASSWORD=gm_pass
+ENV GM_PASSWORD=123456
 ENV GM_CONNECT_KEY=763WXRBW3PFTC3IXPFWH
 ENV GM_LANDER_VERSION=20180307
 
@@ -20,11 +21,12 @@ ADD neople /home/template/neople
 ADD root /home/template/root
 ADD init /home/template/init
 ADD rinetd-0.70.tar.gz /usr/local
-
+ADD TeaEncrypt /
 # 启动脚本
 ADD docker-entrypoint.sh /
 
-RUN chmod -R 777 /tmp && mkdir /data && cd /usr/local/rinetd-0.70 && ./bootstrap && ./configure && make && make install
+RUN chmod -R 777 /tmp && mkdir /data && chmod +x /TeaEncrypt && \
+    cd /usr/local/rinetd-0.70 && ./bootstrap && ./configure && make && make install
 
 # 切换工作目录
 WORKDIR /root

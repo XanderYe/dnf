@@ -81,11 +81,17 @@ tar -zxvf /init/init_sql.tgz
 initMysql
 cd / && rm -rf /init
 
+GAME_PASSWORD=${GAME_PASSWORD:0:8}
+DEC_GAME_PWD=`/TeaEncrypt $GAME_PASSWORD`
+echo "game password: $GAME_PASSWORD"
+echo "game dec key: $DEC_GAME_PWD"
+
+
 mysql -u root -p$MYSQL_ROOT_PASSWORD <<EOF
 grant all privileges on *.* to 'root'@'%' identified by '$MYSQL_ROOT_PASSWORD';
-grant all privileges on *.* to 'game'@'$ALLOW_IP' identified by 'uu5!^%jg';
+grant all privileges on *.* to 'game'@'$ALLOW_IP' identified by '$GAME_PASSWORD';
 flush privileges;
 select user,host,password from mysql.user;
-update d_taiwan.db_connect set db_ip="127.0.0.1", db_port="3306";
+update d_taiwan.db_connect set db_ip="127.0.0.1", db_port="3306", db_passwd="$DEC_GAME_PWD";
 select * from d_taiwan.db_connect;
 EOF
