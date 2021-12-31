@@ -7,6 +7,8 @@ services:
       - TZ=Asia/Shanghai
       # 关闭自动获取
       - AUTO_MYSQL_IP=false
+      # mysql容器名称（主机名）
+      - MYSQL_NAME=dnfmysql
       # mysql的IP地址
       - MYSQL_IP=192.168.1.2
       # mysql的IP端口

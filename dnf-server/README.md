@@ -14,6 +14,8 @@
 
 AUTO_MYSQL_IP: 和dnfmysql使用统一自定义网桥使用，支持自动获取mysql的ip
 
+MYSQL_NAME: dnfmysql容器名，用户自动获取mysql的ip
+
 MYSQL_IP: mysql的ip
 
 MYSQL_PORT: mysql的端口
