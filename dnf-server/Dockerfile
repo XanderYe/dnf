@@ -1,5 +1,5 @@
 # Base Image
-FROM xanderye/centos7-geoip
+FROM xanderye/dnf-base:centos7
 
 MAINTAINER XanderYe
 
@@ -20,13 +20,11 @@ ENV GM_LANDER_VERSION=20180307
 ADD neople /home/template/neople
 ADD root /home/template/root
 ADD init /home/template/init
-ADD rinetd-0.70.tar.gz /usr/local
 ADD TeaEncrypt /
 # 启动脚本
 ADD docker-entrypoint.sh /
 
-RUN chmod -R 777 /tmp && mkdir /data && chmod +x /TeaEncrypt && \
-    cd /usr/local/rinetd-0.70 && ./bootstrap && ./configure && make && make install
+RUN chmod -R 777 /tmp && mkdir /data && chmod +x /TeaEncrypt
 
 # 切换工作目录
 WORKDIR /root

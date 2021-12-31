@@ -76,6 +76,7 @@ sed -i --follow-symlinks "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /root -name 
 sed -i --follow-symlinks "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /root -name "*.ini"`
 
 cd /root
-chmod 777 libhook.so
+# 注入libhook
+export LD_PRELOAD=/lib/libhook.so
 # 启动服务
 ./run
