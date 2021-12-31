@@ -17,6 +17,8 @@ ALLOW_IP: game账户白名单ip，建议使用docker内网网段如`172.20.0.%`�
 
 MYSQL_ROOT_PASSWORD: mysql root密码
 
+GAME_PASSWORD: game账户密码
+
 ## 修改root密码
 
 连接数据库，执行sql
