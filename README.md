@@ -204,7 +204,7 @@ root 22514 13398 0 20:53 pts/0 00:00:00 grep --color=auto df_game
 重启服务命令
 
 ```shell
-docker restart dnf-server
+docker restart dnfserver
 ```
 
 ## 默认的网关信息
@@ -220,8 +220,8 @@ GM密码: 123456
 当容器用最新的环境变量启动时，以下所有的环境变量，包括数据库root密码都会立即生效
 需要更新配置时只需要先停止服务
 ```shell
-docker stop dnf-server
-docker rm dnf-server
+docker stop dnfserver
+docker rm dnfserver
 ```
 然后用最新的环境变量设置启动服务即可
 ```shell
