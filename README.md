@@ -65,7 +65,7 @@ vm.swappiness = 100
 ```
 https://www.cnblogs.com/EasonJim/p/7777904.html
 
-## 拉取镜像
+### 拉取镜像
 
 ```shell
 dnf数据库mysql镜像
@@ -74,7 +74,7 @@ dnf服务server镜像
 docker pull xanderye/dnf-server:centos7
 ```
 
-## 简单启动
+### 简单启动
 
 ```shell
 # 创建一个dnf独立网桥，连通mysql和server两个容器
@@ -151,12 +151,12 @@ docker run -d \
 xanderye/dnf-server:centos7
 ```
 
-## docker-compose启动
+### docker-compose启动
 
 yml文件参考：[docker-compose.yml](docker-compose.yml)
 说明：支持一键部署，首次启动初始化数据需要一点时间，注意查看dnfmysql日志，初始化完成后重启dnfserver即可。
 
-## 如何确认已经成功启动
+### 如何确认已经成功启动
 
 1.查看日志 log  
 ├── siroco11  
@@ -198,7 +198,7 @@ root 16502 16039 9 20:39 ? 00:01:22 ./df_game_r siroco52 start
 root 22514 13398 0 20:53 pts/0 00:00:00 grep --color=auto df_game  
 如上结果df_game_r进程是存在的,代表成功.如果不成功可以重启服务
 
-## 重启服务
+### 重启服务
 
 该服务占有内存较大，极有可能被系统杀死,当进程被杀死时则需要重启服务  
 重启服务命令
@@ -207,7 +207,7 @@ root 22514 13398 0 20:53 pts/0 00:00:00 grep --color=auto df_game
 docker restart dnfserver
 ```
 
-## 默认的网关信息
+### 默认的网关信息
 
 网关端口: 881  
 通讯密钥: 763WXRBW3PFTC3IXPFWH   
@@ -216,7 +216,7 @@ docker restart dnfserver
 GM账户: gm_user  
 GM密码: 123456  
 
-## 可选的环境变量
+### 可选的环境变量
 当容器用最新的环境变量启动时，以下所有的环境变量，包括数据库root密码都会立即生效
 需要更新配置时只需要先停止服务
 ```shell
@@ -243,9 +243,19 @@ GM_LANDER_VERSION
 Windows高版本用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw
 
-## 客户端地址下载
+## 资源下载
 
+### 客户端下载
 链接: https://pan.baidu.com/s/10RgXFtpEhvRUm-hA98Am4A 提取码: fybn
+### 统一网关下载
+链接: https://pan.baidu.com/s/1w6_oGsOtNli11fNjug9f4Q 提取码: 5efm
+### Dof7补丁下载
+链接: https://pan.baidu.com/s/1rxlGfkfHTeGwzMKUNAbSlQ 提取码: ier2
+
+
+## 问题排查文档
+
+[【腾讯文档】docker部署DNF问题排查文档](https://docs.qq.com/doc/DUm5RbnVLU25OVkpa)
 
 ## 沟通交流
 
