@@ -1,7 +1,7 @@
 version: "2.3"
 
 services:
-  dnf-server:
+  dnfserver:
     image: xanderye/dnf-server:centos7
     environment:
       - TZ=Asia/Shanghai

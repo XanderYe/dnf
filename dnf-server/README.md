@@ -20,7 +20,7 @@ MYSQL_IP: mysql的ip
 
 MYSQL_PORT: mysql的端口
 
-GAME_PASSWORD: game账户密码
+GAME_PASSWORD: game账户密码，小于等于8位
 
 AUTO_PUBLIC_IP: 自动获取公网ip
 

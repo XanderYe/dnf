@@ -7,7 +7,7 @@ networks:
         - subnet: 172.20.0.0/16
 
 services:
-  dnf-mysql:
+  dnfmysql:
     image: xanderye/dnf-mysql:5.6
     ports:
       - 3000:3306
@@ -21,10 +21,10 @@ services:
     networks:
       - dnf
     restart: unless-stopped
-    container_name: dnfmysql
     volumes:
       - ./dnfmysql/mysql:/var/lib/mysql
-  dnf-server:
+    container_name: dnfmysql
+  dnfserver:
     image: xanderye/dnf-server:centos7
     depends_on:
       - dnf-mysql
