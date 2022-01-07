@@ -86,7 +86,7 @@ docker network create dnf --subnet 172.20.0.0/16
 # MYSQL_ROOT_PASSWORD为mysql root密码，仅初始化有效
 docker run -itd \
 -p 3306:3306 \
--v /dnf/dnf-mysql/mysql:/var/lib/mysql \
+-v /dnf/dnfmysql/mysql:/var/lib/mysql \
 -e TZ=Asia/Shanghai \
 -e ALLOW_IP=172.20.0.% \
 -e GAME_PASSWORD=uu5!^%jg \
@@ -123,8 +123,8 @@ docker run -d \
 -e PUBLIC_IP=192.168.1.2 \
 -e GM_ACCOUNT=gm_user \
 -e GM_PASSWORD=123456 \
--v /dnf/dnf-server/log:/home/neople/game/log \
--v /dnf/dnf-server/data:/data \
+-v /dnf/dnfserver/log:/home/neople/game/log \
+-v /dnf/dnfserver/data:/data \
 -p 7600:7600/tcp \
 -p 881:881/tcp \
 -p 20303:20303/tcp -p 20303:20303/udp \
