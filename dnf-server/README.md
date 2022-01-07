@@ -3,7 +3,7 @@
 ## 说明
 
 1. 使用`libhook.so`优化了CPU占用,1-2分钟出五国，占用10%以内
-2. game密码限制小于等于8位，否则无法连接
+2. game密码限制必须8位，否则无法连接
 3. 修改环境变量重启即刻生效
 
 ## 启动
@@ -20,7 +20,7 @@ MYSQL_IP: mysql的ip
 
 MYSQL_PORT: mysql的端口
 
-GAME_PASSWORD: game账户密码，小于等于8位
+GAME_PASSWORD: game账户密码，必须8位
 
 AUTO_PUBLIC_IP: 自动获取公网ip
 

@@ -82,7 +82,7 @@ docker network create dnf --subnet 172.20.0.0/16
 
 # 使用mysql5.6(数据不通用)
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
-# GAME_PASSWORD为game账户密码（密码<=8位 否则无法连接）
+# GAME_PASSWORD为game账户密码（密码必须8位 否则无法连接）
 # MYSQL_ROOT_PASSWORD为mysql root密码，仅初始化有效
 docker run -itd \
 -p 3306:3306 \
@@ -107,7 +107,7 @@ docker logs dnfmysql
 # MYSQL_NAME为内网下mysql容器名称（主机名）
 # MYSQL_IP为mysql的IP地址（公网使用，使用时需要关闭AUTO_MYSQL_IP）
 # MYSQL_PORT为mysql的端口（公网使用，使用时需要关闭AUTO_MYSQL_IP）
-# GAME_PASSWORD为game账户密码（密码<=8位 否则无法连接）
+# GAME_PASSWORD为game账户密码（密码必须8位 否则无法连接）
 # AUTO_PUBLIC_IP为自动获取公网ip（小概率会失败，观察日志 get public ip 输出）
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
 # GM_ACCOUNT为登录器用户名，建议替换
