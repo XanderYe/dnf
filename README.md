@@ -83,7 +83,7 @@ docker network create dnf --subnet 172.20.0.0/16
 # 使用mysql5.6(数据不通用)
 # ALLOW_IP为game账户ip白名单（dnf服务的ip）
 # GAME_PASSWORD为game账户密码（密码<=8位 否则无法连接）
-# DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
+# MYSQL_ROOT_PASSWORD为mysql root密码，仅初始化有效
 docker run -itd \
 -p 3306:3306 \
 -v /dnf/dnf-mysql/mysql:/var/lib/mysql \
