@@ -1,5 +1,5 @@
 # Base Image
-FROM xanderye/dnf-base:centos7
+FROM xanderye/dnf-base:centos7-minimal
 
 MAINTAINER XanderYe
 
