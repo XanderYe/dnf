@@ -10,4 +10,4 @@ ENV ALLOW_IP=127.0.0.1
 ENV GAME_PASSWORD=uu5!^%jg
 ENV MYSQL_ROOT_PASSWORD=88888888
 
-RUN chown -R mysql:mysql /init && chmod a+x /docker-entrypoint-initdb.d/init.sh /TeaEncrypt
+RUN chmod 777 /init && chmod a+x /docker-entrypoint-initdb.d/init.sh /TeaEncrypt

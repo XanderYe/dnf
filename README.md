@@ -96,9 +96,7 @@ docker run -itd \
 --network=dnf \
 xanderye/dnf-mysql:5.6
 
-# 查看日志 (首次启动会卡在
-# Using a password on the command line interface can be insecure. 
-# 需要等待，出现一大堆数据库配置列表才是启动完成)
+# 查看日志 (首次启动需要等待几十秒，出现一大堆数据库配置列表才是启动完成)
 docker logs dnfmysql
 
 
@@ -154,7 +152,6 @@ xanderye/dnf-server:centos7
 ### docker-compose启动
 
 yml文件参考：[docker-compose.yml](docker-compose.yml)
-说明：支持一键部署，首次启动初始化数据需要一点时间，注意查看dnfmysql日志，初始化完成后重启dnfserver即可。
 
 ### 如何确认已经成功启动
 
