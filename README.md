@@ -89,7 +89,7 @@ docker run -itd \
 -v /dnf/dnfmysql/mysql:/var/lib/mysql \
 -e TZ=Asia/Shanghai \
 -e ALLOW_IP=172.20.0.% \
--e GAME_PASSWORD=uu5!^%jg \
+-e GAME_PASSWORD=uu5\!^%jg \
 # root账户密码
 -e MYSQL_ROOT_PASSWORD=88888888 \
 --name dnfmysql \
