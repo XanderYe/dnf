@@ -116,7 +116,7 @@ docker run -d \
 -e MYSQL_NAME=dnfmysql \
 -e MYSQL_IP=192.168.1.2 \
 -e MYSQL_PORT=3306 \
--e GAME_PASSWORD=uu5!^%jg \
+-e GAME_PASSWORD=uu5\!^%jg \
 -e AUTO_PUBLIC_IP=false \
 -e PUBLIC_IP=192.168.1.2 \
 -e GM_ACCOUNT=gm_user \
