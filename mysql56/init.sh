@@ -68,9 +68,6 @@ source /init/taiwan_se_event.sql;
 CREATE SCHEMA taiwan_siroco DEFAULT CHARACTER SET utf8 ;
 use taiwan_siroco;
 source /init/taiwan_siroco.sql;
-CREATE SCHEMA tw DEFAULT CHARACTER SET utf8 ;
-use tw;
-source /init/tw.sql;
 flush PRIVILEGES;
 EOF
   echo "mysql initialized successfully"
