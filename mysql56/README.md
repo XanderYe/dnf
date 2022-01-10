@@ -33,7 +33,7 @@ flush privileges;
 如果密码中带!，要转义 例如 `docker exec -it dnfmysql /TeaEncrypt uu5\!^%jg`
 2. 连接数据库，执行sql
 ```sql
-grant all privileges on *.* to 'game'@'%' identified by '新密码';
+update user set Password = PASSWORD('新密码') where user = 'game';
 flush privileges;
 # 更新48位密文
 update d_taiwan.db_connect set db_passwd='密文';
