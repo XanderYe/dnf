@@ -11,6 +11,7 @@ ENV MYSQL_PORT=3306
 ENV GAME_PASSWORD=uu5!^%jg
 ENV AUTO_PUBLIC_IP=false
 ENV PUBLIC_IP=127.0.0.1
+ENV DP2=false
 ENV GM_ACCOUNT=gm_user
 ENV GM_PASSWORD=123456
 ENV GM_CONNECT_KEY=763WXRBW3PFTC3IXPFWH
@@ -20,6 +21,7 @@ ENV GM_LANDER_VERSION=20180307
 ADD neople /home/template/neople
 ADD root /home/template/root
 ADD init /home/template/init
+ADD dp2.tar.gz /
 ADD TeaEncrypt /
 # 启动脚本
 ADD docker-entrypoint.sh /
