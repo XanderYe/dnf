@@ -27,7 +27,7 @@ services:
   dnfserver:
     image: xanderye/dnf-server:centos7
     depends_on:
-      - dnf-mysql
+      - dnfmysql
     environment:
       - TZ=Asia/Shanghai
       # 自动获取mysql容器的ip
