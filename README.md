@@ -4,7 +4,8 @@
 
 基于[1995chen/dnf](https://github.com/1995chen/dnf)
 
-感谢 xyz1001大佬提供`libhook.so`优化CPU占用 [源码](https://godbolt.org/z/EKsYGh5dv)
+感谢 xyz1001大佬提供`libhook.so`优化CPU占用 [源码](https://godbolt.org/z/EKsYGh5dv) <br/>
+集成了DP2插件
 
 ## 部署流程
 
