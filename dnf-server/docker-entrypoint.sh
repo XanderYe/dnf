@@ -45,11 +45,11 @@ echo "game password: $GAME_PASSWORD"
 echo "game dec key: $DEC_GAME_PWD"
 
 # 替换环境变量
-sed -i "s/MYSQL_IP/$REP_MYSQL_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
-sed -i "s/GAME_PASSWORD/$GAME_PASSWORD/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
-sed -i "s/DEC_GAME_PWD/$DEC_GAME_PWD/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
-sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.cfg"`
-sed -i "s/PUBLIC_IP/$PUBLIC_IP/g" `find /home/template/neople-tmp -type f -name "*.tbl"`
+find /home/template/neople-tmp -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/MYSQL_IP/$REP_MYSQL_IP/g"
+find /home/template/neople-tmp -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/GAME_PASSWORD/$GAME_PASSWORD/g"
+find /home/template/neople-tmp -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/DEC_GAME_PWD/$DEC_GAME_PWD/g"
+find /home/template/neople-tmp -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g"
+find /home/template/neople-tmp -type f -name "*.tbl" -print0 | xargs -0 sed -i "s/PUBLIC_IP/$PUBLIC_IP/g"
 # 将结果文件拷贝到对应目录[这里是为了保住日志文件目录,将日志文件挂载到宿主机外,因此采用覆盖而不是mv]
 cp -rf /home/template/neople-tmp/* /home/neople
 rm -rf /home/template/neople-tmp
@@ -76,7 +76,6 @@ sed -i --follow-symlinks "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /root -name 
 sed -i --follow-symlinks "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /root -name "*.ini"`
 
 cd /root
-# 注入libhook
-export LD_PRELOAD=/lib/libhook.so
+
 # 启动服务
 ./run

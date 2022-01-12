@@ -87,7 +87,7 @@ cd /home/neople/coserver
 chmod 777 *
 rm -f  /home/neople/coserver/pid/*.pid
 rm -rf  /home/neople/coserver/log/*.*
-./df_coserver_r coserver start &
+LD_PRELOAD=/lib/libhook.so ./df_coserver_r coserver start &
 
 cd /home/neople/community
 chmod 777 *
@@ -112,7 +112,7 @@ cd /home/neople/game
 chmod 777 *
 rm -rf /home/neople/game/log/*
 sleep 2
-./df_game_r siroco11 start &
+LD_PRELOAD=/lib/libhook.so ./df_game_r siroco11 start &
 sleep 2
-./df_game_r siroco52 start &
+LD_PRELOAD=/lib/libhook.so ./df_game_r siroco52 start &
 tail -f /dev/null
