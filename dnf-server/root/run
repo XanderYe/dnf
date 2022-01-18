@@ -15,13 +15,13 @@ cd /home/neople/monitor
 chmod 777 *
 rm -f  /home/neople/monitor/pid/*.pid
 rm -rf  /home/neople/monitor/log/*.*
-./df_monitor_r mnt_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_monitor_r mnt_siroco start &
 
 cd /home/neople/manager
 chmod 777 *
 rm -f  /home/neople/manager/pid/*.pid
 rm -rf  /home/neople/manager/log/*.*
-./df_manager_r manager start &
+LD_PRELOAD=/lib/libhook.so ./df_manager_r manager start &
 
 cd /home/neople/relay
 chmod 777 *
@@ -33,31 +33,31 @@ cd /home/neople/bridge
 chmod 777 *
 rm -f  /home/neople/bridge/pid/*.pid
 rm -rf  /home/neople/bridge/log/*.*
-./df_bridge_r bridge start &
+LD_PRELOAD=/lib/libhook.so ./df_bridge_r bridge start &
 
 cd /home/neople/channel
 chmod 777 *
 rm -f  /home/neople/channel/pid/*.pid
 rm -rf  /home/neople/channel/log/*.*
-./df_channel_r channel start &
+LD_PRELOAD=/lib/libhook.so ./df_channel_r channel start &
 
 cd /home/neople/dbmw_guild
 chmod 777 *
 rm -f  /home/neople/dbmw_guild/pid/*.pid
 rm -rf  /home/neople/dbmw_guild/log/*.*
-./df_dbmw_r dbmw_gld_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_dbmw_r dbmw_gld_siroco start &
 
 cd /home/neople/dbmw_mnt
 chmod 777 *
 rm -f  /home/neople/dbmw_mnt/pid/*.pid
 rm -rf  /home/neople/dbmw_mnt/log/*.*
-./df_dbmw_r dbmw_mnt_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_dbmw_r dbmw_mnt_siroco start &
 
 cd /home/neople/dbmw_stat
 chmod 777 *
 rm -f  /home/neople/dbmw_stat/pid/*.pid
 rm -rf  /home/neople/dbmw_stat/log/*.*
-./df_dbmw_r dbmw_stat_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_dbmw_r dbmw_stat_siroco start &
 
 cd /home/neople/auction
 chmod 777 *
@@ -75,13 +75,13 @@ cd /home/neople/guild
 chmod 777 *
 rm -f  /home/neople/guild/pid/*.pid
 rm -rf  /home/neople/guild/log/*.*
-./df_guild_r gld_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_guild_r gld_siroco start &
 
 cd /home/neople/statics
 chmod 777 *
 rm -f  /home/neople/statics/pid/*.pid
 rm -rf  /home/neople/statics/log/*.*
-./df_statics_r stat_siroco start &
+LD_PRELOAD=/lib/libhook.so ./df_statics_r stat_siroco start &
 
 cd /home/neople/coserver
 chmod 777 *
