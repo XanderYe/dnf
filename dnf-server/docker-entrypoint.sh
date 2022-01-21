@@ -37,6 +37,7 @@ then
   echo "mysql ip: $MYSQL_IP"
 fi
 
+# 使用rinetd端口映射，映射本机3306为MySQL的ip和端口
 echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
 rinetd -c /etc/rinetd.conf
 REP_MYSQL_IP=127.0.0.1
