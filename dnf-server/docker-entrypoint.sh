@@ -21,14 +21,11 @@ cp -r /home/template/root /home/template/root-tmp
 # 检查/data
 /home/template/init/init.sh
 
-if $DP2;
-then
-  cp /dp2/libGeoIP.so.1 /lib/libGeoIP.so.1
-  echo "enable dp2"
-else
-  cp /lib/libGeoIP.so.bak /lib/libGeoIP.so.1
-  echo "disable dp2"
-fi
+GAME_PASSWORD=${GAME_PASSWORD:0:8}
+DEC_GAME_PWD=`/TeaEncrypt $GAME_PASSWORD`
+echo "game password: $GAME_PASSWORD"
+echo "game dec key: $DEC_GAME_PWD"
+echo
 
 # 获取mysql容器的ip
 if $AUTO_MYSQL_IP;
@@ -36,6 +33,25 @@ then
   MYSQL_IP=`ping -i 0.1 -c 1 $MYSQL_NAME|sed '1{s/[^(]*(//;s/).*//;q}'`
   echo "mysql ip: $MYSQL_IP"
 fi
+
+# 检测MySQL连接
+mysql=( mysql -h$MYSQL_IP -P$MYSQL_PORT -ugame -p$GAME_PASSWORD )
+echo "开始检测MySQL连接，倒计时30秒"
+for i in {30..0}; do
+    if echo 'SELECT 1' | "${mysql[@]}" &> /dev/null; then
+        break
+    fi
+    echo 'MySQL连接失败，尝试重试...'
+    sleep 1
+done
+if [ "$i" = 0 ]; then
+    echo 'SELECT 1' | "${mysql[@]}"
+    echo >&2 "MySQL连接失败，请检查 IP: $MYSQL_IP, Port: $MYSQL_PORT, Password: $GAME_PASSWORD. 结束容器"
+    exit 1
+fi
+
+echo "MySQL连接成功"
+echo
 
 # 使用rinetd端口映射，映射本机3306为MySQL的ip和端口
 echo "0.0.0.0 3306 $MYSQL_IP $MYSQL_PORT" > /etc/rinetd.conf
@@ -47,14 +63,20 @@ if $AUTO_PUBLIC_IP;
 then
   PUBLIC_IP=`curl -s http://pv.sohu.com/cityjson?ie=utf-8|awk -F\" '{print $4}'`
   echo "public ip: $PUBLIC_IP"
+  echo
+  sleep 5
 fi
 
-sleep 2
-
-GAME_PASSWORD=${GAME_PASSWORD:0:8}
-DEC_GAME_PWD=`/TeaEncrypt $GAME_PASSWORD`
-echo "game password: $GAME_PASSWORD"
-echo "game dec key: $DEC_GAME_PWD"
+# dp插件
+if $DP2;
+then
+  cp /dp2/libGeoIP.so.1 /lib/libGeoIP.so.1
+  echo "enable dp2"
+else
+  cp /lib/libGeoIP.so.bak /lib/libGeoIP.so.1
+  echo "disable dp2"
+fi
+echo
 
 # 替换环境变量
 find /home/template/neople-tmp -type f -name "*.cfg" -print0 | xargs -0 sed -i "s/MYSQL_IP/$REP_MYSQL_IP/g"

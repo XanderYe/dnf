@@ -238,8 +238,10 @@ GM_CONNECT_KEY
 # GM登录器版本
 GM_LANDER_VERSION
 ```
-Windows高版本用户无法进入频道，需要添加hosts  
+Windows高版本统一补丁用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw
+
+建议使用 统一网关**登录器**+Dof7补丁
 
 ## 资源下载
 
