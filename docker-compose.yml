@@ -44,6 +44,8 @@ services:
       - AUTO_PUBLIC_IP=false
       # 这里填写你的IP地址
       - PUBLIC_IP=127.0.0.1
+      # DP2插件
+      - DP2=false
       - GM_ACCOUNT=gm_user
       - GM_PASSWORD=123456
       - GM_CONNECT_KEY=763WXRBW3PFTC3IXPFWH
