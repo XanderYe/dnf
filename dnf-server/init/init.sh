@@ -51,9 +51,10 @@ else
 fi
 
 # 判断Config.ini文件是否初始化过
-if [ ! -f "/data/df_game_r.lua" ];then
+if [ ! -d "/data/dp2" ];then
   # 拷贝版本文件到持久化目录
-  cp /home/template/init/df_game_r.lua /data/
+  mkdir -p /data/dp2/
+  cp /home/template/init/df_game_r.lua /data/dp2/
   echo "init df_game_r.lua success"
 else
   echo "df_game_r.lua has already initialized, do nothing!"

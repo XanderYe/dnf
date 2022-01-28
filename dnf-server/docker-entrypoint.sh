@@ -100,8 +100,10 @@ rm -rf /home/template/root-tmp
 cp /data/privatekey.pem /root/
 # 构建配置文件软链[不能使用硬链接, 硬链接不可跨设备]
 ln -s /data/Config.ini /root/Config.ini
+
 # dp2脚本
-cp /data/df_game_r.lua /dp2/df_game_r.lua
+cp -rf /data/dp2/* /dp2/
+
 # 替换Config.ini中的GM用户名、密码、连接KEY、登录器版本[这里操作的对象是一个软链接不需要指定-type]
 sed -i --follow-symlinks "6c IP=$MYSQL_IP" `find /root -name "*.ini"`
 sed -i --follow-symlinks "7c Password=$GAME_PASSWORD" `find /root -name "*.ini"`
