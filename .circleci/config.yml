@@ -1,21 +1,24 @@
 version: 2.1
 
+executors:
+  docker-publisher:
+    docker:
+      - image: docker:19
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+
 jobs:
   checkout_code:
     docker:
       - image: alpine:3.7
     steps:
-      - run: 
+      - run:
           name: Avoid hosts unknown for github
           command: |
             mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - run: 
-          name: List Files
-          command: |
-            pwd
-            ls -al
       - checkout
-      - run: 
+      - run:
           name: List Files
           command: |
             pwd
@@ -24,27 +27,18 @@ jobs:
           root: /root
           paths:
             - project
+
   build_image:
-    docker:
-      - image: docker:19
+    executor: docker-publisher
     steps:
-      - setup_remote_docker:
-          version: 19.03.13
       - attach_workspace:
           at: /root
-      - run: 
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
           name: Docker Login
           command: |
             echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: 
-          name: Avoid hosts unknown for github
-          command: |
-            mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - run: 
-          name: List Files
-          command: |
-            pwd
-            ls -al
       - run:
           name: Build Image
           command: |
@@ -53,17 +47,72 @@ jobs:
             docker tag xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7} xanderye/dnf-server:centos7-latest
             docker tag xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7} xanderye/dnf-mysql:5.6-latest
       - run:
+          name: Archive Docker image
+          command: |
+            docker save -o dnf-server.tar xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7}
+            docker save -o dnf-mysql.tar xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7}
+      - run:
           name: Push Image
           command: |
             docker push xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7}
             docker push xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7}
             docker push xanderye/dnf-server:centos7-latest
             docker push xanderye/dnf-mysql:5.6-latest
+      # 持久化root目录
+      - persist_to_workspace:
+          root: /root
+          paths:
+            - project
+
+  tag_release_image:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /root
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Load archived Docker image
+          command: |
+            docker load -i dnf-server.tar
+            docker load -i dnf-mysql.tar
+      - run:
+          name: Tag & Push Image
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+            docker tag xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7} xanderye/dnf-server:centos7-$CIRCLE_TAG
+            docker push xanderye/dnf-server:centos7-$CIRCLE_TAG
+            docker tag xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7} xanderye/dnf-mysql:5.6-$CIRCLE_TAG
+            docker push xanderye/dnf-mysql:5.6-$CIRCLE_TAG
 
 workflows:
-  build_dnf_image:
+  staging:
     jobs:
       - checkout_code
       - build_image:
           requires:
             - checkout_code
+
+  production:
+    jobs:
+      - checkout_code:
+          # this yaml anchor is setting these values to "filters-production"
+          filters: &filters-production
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - build_image:
+          requires:
+            - checkout_code
+          context:
+            - docker-hub-creds
+          filters:
+            <<: *filters-production
+      - tag_release_image:
+          requires:
+            - build_image
+          context:
+            - docker-hub-creds
+          filters:
+            <<: *filters-production
