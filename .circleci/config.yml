@@ -1,0 +1,69 @@
+version: 2.1
+
+jobs:
+  checkout_code:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run: 
+          name: Avoid hosts unknown for github
+          command: |
+            mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run: 
+          name: List Files
+          command: |
+            pwd
+            ls -al
+      - checkout
+      - run: 
+          name: List Files
+          command: |
+            pwd
+            ls -al
+      - persist_to_workspace:
+          root: /root
+          paths:
+            - project
+  build_image:
+    docker:
+      - image: docker:19
+    steps:
+      - setup_remote_docker:
+          version: 19.03.13
+      - attach_workspace:
+          at: /root
+      - run: 
+          name: Docker Login
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: 
+          name: Avoid hosts unknown for github
+          command: |
+            mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run: 
+          name: List Files
+          command: |
+            pwd
+            ls -al
+      - run:
+          name: Build Image
+          command: |
+            docker build -f $(pwd)/dnf-server/Dockerfile -t xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7} $(pwd)/dnf-server/
+            docker build -f $(pwd)/mysql56/Dockerfile -t xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7} $(pwd)/mysql56/
+            docker tag xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7} xanderye/dnf-server:centos7-latest
+            docker tag xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7} xanderye/dnf-mysql:5.6-latest
+      - run:
+          name: Push Image
+          command: |
+            docker push xanderye/dnf-server:centos7-${CIRCLE_SHA1: 0: 7}
+            docker push xanderye/dnf-mysql:5.6-${CIRCLE_SHA1: 0: 7}
+            docker push xanderye/dnf-server:centos7-latest
+            docker push xanderye/dnf-mysql:5.6-latest
+
+workflows:
+  build_dnf_image:
+    jobs:
+      - checkout_code
+      - build_image:
+          requires:
+            - checkout_code
