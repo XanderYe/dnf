@@ -109,6 +109,7 @@ docker logs dnfmysql
 # GAME_PASSWORD为game账户密码（密码必须8位 否则无法连接）
 # AUTO_PUBLIC_IP为自动获取公网ip（小概率会失败，观察日志 get public ip 输出）
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
+# DP2为dp2插件是否启用，默认禁用
 # GM_ACCOUNT为登录器用户名，建议替换
 # GM_PASSWORD为登录器密码，建议替换
 docker run -d \
