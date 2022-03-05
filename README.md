@@ -120,6 +120,7 @@ docker run -d \
 -e GAME_PASSWORD=uu5\!^%jg \
 -e AUTO_PUBLIC_IP=false \
 -e PUBLIC_IP=192.168.1.2 \
+-e DP2=false \
 -e GM_ACCOUNT=gm_user \
 -e GM_PASSWORD=123456 \
 -v /dnf/dnfserver/log:/home/neople/game/log \
@@ -229,6 +230,8 @@ MYSQL_IP
 AUTO_PUBLIC_IP
 # 公网或局域网IP地址
 PUBLIC_IP
+# dp2插件
+DP2
 # GM管理员账号
 GM_ACCOUNT
 # GM管理员密码
