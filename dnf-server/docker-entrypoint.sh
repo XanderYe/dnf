@@ -18,11 +18,8 @@ rm -rf lib/libGeoIP.so.1
 cp -r /home/template/neople /home/template/neople-tmp
 cp -r /home/template/root /home/template/root-tmp
 
-# 配置权限
-chmod +x /home/template/init/init.sh && chmod +x /root/
-
 # 检查/data
-/home/template/init/init.sh
+chmod +x /home/template/init/init.sh && /home/template/init/init.sh
 
 GAME_PASSWORD=${GAME_PASSWORD:0:8}
 DEC_GAME_PWD=`/TeaEncrypt $GAME_PASSWORD`
@@ -116,7 +113,7 @@ sed -i --follow-symlinks "s/GM_PASSWORD/$GM_PASSWORD/g" `find /root -name "*.ini
 sed -i --follow-symlinks "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /root -name "*.ini"`
 sed -i --follow-symlinks "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /root -name "*.ini"`
 
-cd /root
+cd /root && chmod +x /root/*
 
 # 启动服务
 ./run
