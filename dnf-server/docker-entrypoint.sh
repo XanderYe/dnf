@@ -18,6 +18,9 @@ rm -rf lib/libGeoIP.so.1
 cp -r /home/template/neople /home/template/neople-tmp
 cp -r /home/template/root /home/template/root-tmp
 
+# 配置权限
+chmod +x /home/template/init/init.sh && chmod +x /root/
+
 # 检查/data
 /home/template/init/init.sh
 
