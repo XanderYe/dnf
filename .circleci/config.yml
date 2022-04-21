@@ -105,14 +105,10 @@ workflows:
       - build_image:
           requires:
             - checkout_code
-          context:
-            - docker-hub-creds
           filters:
             <<: *filters-production
       - tag_release_image:
           requires:
             - build_image
-          context:
-            - docker-hub-creds
           filters:
             <<: *filters-production
