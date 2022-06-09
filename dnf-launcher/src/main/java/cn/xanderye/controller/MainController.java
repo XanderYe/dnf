@@ -7,19 +7,19 @@ import cn.xanderye.util.PropertyUtil;
 import cn.xanderye.util.SystemUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 /**
  * @author XanderYe
  * @date 2020/2/6
  */
+@Slf4j
 public class MainController implements Initializable {
 
     @FXML
@@ -50,6 +50,8 @@ public class MainController implements Initializable {
                     PropertyUtil.save("uid", uidStr);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    log.error(e.getMessage(), e);
+                    Dialog.errorDialog("错误", "请检查DNF.exe路径");
                 }
             });
             executorService.shutdown();
