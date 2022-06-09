@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_PATH"></Property>
+        <Property name="LOG_PATTERN_LAYOUT">%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %processId --- [%15t] %-40.40c : %m %n}</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
+        </Console>
+
+        <RollingFile name="InfoAppender" fileName="${LOG_PATH}logs/info.log" append="true"
+                     filePattern="${LOG_PATH}logs/$${date:yyyy-MM}/import-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
+            <SizeBasedTriggeringPolicy size="100 MB"/>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="ErrorAppender" fileName="${LOG_PATH}logs/err.log" append="true"
+                     filePattern="${LOG_PATH}logs/$${date:yyyy-MM}/err-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
+            <SizeBasedTriggeringPolicy size="100 MB"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="InfoAppender"/>
+            <AppenderRef ref="ErrorAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

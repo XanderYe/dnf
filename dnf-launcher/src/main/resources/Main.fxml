@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.xanderye.control.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.xanderye.controller.MainController">
+   <children>
+      <NumberTextField fx:id="uidText" layoutX="148.0" layoutY="68.0" prefHeight="30.0" prefWidth="180.0" text="18000000" />
+      <Label layoutX="70.0" layoutY="68.0" prefHeight="30.0" text="UID" />
+      <Button layoutX="257.0" layoutY="207.0" mnemonicParsing="false" onAction="#start" prefHeight="37.0" prefWidth="70.0" text="登录" />
+   </children>
+</AnchorPane>
