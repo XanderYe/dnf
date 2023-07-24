@@ -61,7 +61,7 @@ REP_MYSQL_IP=127.0.0.1
 # 获取公网ip
 if $AUTO_PUBLIC_IP;
 then
-  PUBLIC_IP=`curl -s http://pv.sohu.com/cityjson?ie=utf-8|awk -F\" '{print $4}'`
+  PUBLIC_IP=`curl -s https://v4.ident.me'`
   echo "public ip: $PUBLIC_IP"
   echo
   sleep 5
